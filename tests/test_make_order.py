@@ -18,11 +18,11 @@ class TestMakeOrder:
     def test_make_order_on_header(self):
         # объект класса страницы оформления заказа
         order_page = OrderPage(self.driver)
-        # функция нажатия на кнопку "Заказать" в хедере
+        # метод нажатия на кнопку "Заказать" в хедере
         order_page.click_on_button_order_on_header()
-        # функция заполнения формы оформления заказа
+        # метод заполнения формы оформления заказа
         order_page.filling_order_form('Тест', 'Тестов', 'ул. Тестовая, 15', '89999999999')
-        # функция получения текста на форме успешного оформления заказа
+        # метод получения текста на форме успешного оформления заказа
         actual_result = order_page.get_text_successful_order()
         time.sleep(3)
 
@@ -32,11 +32,11 @@ class TestMakeOrder:
     def test_make_order_on_footer(self):
         # объект класса страницы оформления заказа
         order_page = OrderPage(self.driver)
-        # функция нажатия на кнопку "Заказать" внизу страницы
+        # метод нажатия на кнопку "Заказать" внизу страницы
         order_page.click_on_button_order_on_footer()
-        # функция заполнения формы оформления заказа
+        # метод заполнения формы оформления заказа
         order_page.filling_order_form('Тест', 'Тестов', 'ул. Тестовая, 15', '89999999999')
-        # функция получения текста на форме успешного оформления заказа
+        # метод получения текста на форме успешного оформления заказа
         actual_result = order_page.get_text_successful_order()
 
         assert 'Заказ оформлен' in actual_result
