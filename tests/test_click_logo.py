@@ -30,7 +30,7 @@ class TestClickLogo:
     def test_click_logo_yandex_on_main_page(self):
         # объект класса страницы оформления заказа
         main_page = MainPage(self.driver)
-        # функция нажатия на логотип "Яндекс" и получения текущего url
+        # метод нажатия на логотип "Яндекс" и получения текущего url
         actual_result = main_page.click_logo_yandex_and_get_current_url()
 
         assert 'dzen.ru' in actual_result
