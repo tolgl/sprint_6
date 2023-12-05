@@ -17,11 +17,11 @@ class TestClickLogo:
     def test_click_logo_scooter_on_page_order(self):
         # объект класса страницы оформления заказа
         order_page = OrderPage(self.driver)
-        # функция нажатия на кнопку "Заказать"
+        # метод нажатия на кнопку "Заказать"
         order_page.click_on_button_order_on_header()
-        # функция нажатия на логотип "Самокат"
+        # метод нажатия на логотип "Самокат"
         order_page.click_logo_scooter()
-        # функция получения заголовка главной страницы
+        # метод получения заголовка главной страницы
         actual_result = order_page.get_home_header()
 
         assert f'Самокат\nна пару дней' in actual_result
