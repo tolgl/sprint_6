@@ -12,7 +12,6 @@ class TestGetAnswer:
     def setup_class(cls):
         cls.driver = webdriver.Firefox()
         cls.driver.fullscreen_window()
-        cls.driver.get('https://qa-scooter.praktikum-services.ru/')
 
     @allure.title('Проверка текста ответов на блоке "Вопросы о важном"')
     @pytest.mark.parametrize(
@@ -29,6 +28,7 @@ class TestGetAnswer:
         ]
     )
     def test_get_answer(self, locator_question, locator_answer, expected_result):
+        self.driver.get('https://qa-scooter.praktikum-services.ru/')
         # объект класса главной страницы
         main_page = MainPage(self.driver)
         # скролл до блока с вопросами
