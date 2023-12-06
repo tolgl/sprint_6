@@ -24,7 +24,6 @@ class TestMakeOrder:
         order_page.filling_order_form('Тест', 'Тестов', 'ул. Тестовая, 15', '89999999999')
         # метод получения текста на форме успешного оформления заказа
         actual_result = order_page.get_text_successful_order()
-        time.sleep(3)
 
         assert 'Заказ оформлен' in actual_result
 
