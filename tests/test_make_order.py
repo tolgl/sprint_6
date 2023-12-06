@@ -10,10 +10,10 @@ class TestMakeOrder:
     def setup_class(cls):
         cls.driver = webdriver.Firefox()
         cls.driver.fullscreen_window()
-        cls.driver.get('https://qa-scooter.praktikum-services.ru/')
 
     @allure.title('Проверка оформления заказа по кнопке "Заказать" вверху страницы')
     def test_make_order_on_header(self):
+        self.driver.get('https://qa-scooter.praktikum-services.ru/')
         # объект класса страницы оформления заказа
         order_page = OrderPage(self.driver)
         # метод нажатия на кнопку "Заказать" в хедере
@@ -27,6 +27,7 @@ class TestMakeOrder:
 
     @allure.title('Проверка оформления заказа по кнопке "Заказать" внизу страницы')
     def test_make_order_on_footer(self):
+        self.driver.get('https://qa-scooter.praktikum-services.ru/')
         # объект класса страницы оформления заказа
         order_page = OrderPage(self.driver)
         # метод нажатия на кнопку "Заказать" внизу страницы
