@@ -1,5 +1,3 @@
-import time
-
 from selenium import webdriver
 from pages.order_page import OrderPage
 import allure
