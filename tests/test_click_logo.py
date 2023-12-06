@@ -11,10 +11,10 @@ class TestClickLogo:
     def setup_class(cls):
         cls.driver = webdriver.Firefox()
         cls.driver.fullscreen_window()
-        cls.driver.get('https://qa-scooter.praktikum-services.ru/')
 
     @allure.title('Проверка нажатия на логотип "Самокат" на странице заказа')
     def test_click_logo_scooter_on_page_order(self):
+        self.driver.get('https://qa-scooter.praktikum-services.ru/')
         # объект класса страницы оформления заказа
         order_page = OrderPage(self.driver)
         # метод нажатия на кнопку "Заказать"
@@ -28,6 +28,7 @@ class TestClickLogo:
 
     @allure.title('Проверка нажатия на логотип "Яндекс" на странице заказа')
     def test_click_logo_yandex_on_main_page(self):
+        self.driver.get('https://qa-scooter.praktikum-services.ru/')
         # объект класса страницы оформления заказа
         main_page = MainPage(self.driver)
         # метод нажатия на логотип "Яндекс" и получения текущего url
