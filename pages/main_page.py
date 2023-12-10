@@ -22,6 +22,7 @@ class MainPageHelper(BasePage):
     def click_on_button_order_on_header(self):
         self.find_element(MainPageLocators.button_order_on_header).click()
 
+    @allure.step('Нажатие на кнопку Заказать внизу сайта')
     def click_on_button_order_on_footer(self):
         # скролл до кнопки "Заказать" внизу страницы
         self.scroll_to_element(MainPageLocators.button_order_on_footer)
