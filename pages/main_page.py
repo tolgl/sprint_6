@@ -18,15 +18,6 @@ class MainPageHelper(BasePage):
     def get_answer_on_question(self, answer):
         return self.find_element(answer, wait_time=3).text
 
-    def click_logo_yandex_and_get_current_url(self):
-        self.click_logo_yandex()
-        # ожидаем появление второй вкладки
-        self.wait_open_new_window(wait_time=3)
-        # переключаемся на вторую вкладку
-        self.switch_new_window()
-        # ожидаем появление логотипа "Дзен"
-        self.find_element(BasePageLocators.logo_dzen)
-
     @allure.step('Нажатие на кнопку Заказать в шапке сайта')
     def click_on_button_order_on_header(self):
         self.find_element(MainPageLocators.button_order_on_header).click()
