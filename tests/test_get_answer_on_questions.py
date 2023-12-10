@@ -1,17 +1,10 @@
 import pytest
-from selenium import webdriver
-from pages.main_page import MainPage
+from pages.main_page import MainPageHelper
 from locators.main_page_locators import MainPageLocators
 import allure
 
 
 class TestGetAnswer:
-    driver = None
-
-    @classmethod
-    def setup_class(cls):
-        cls.driver = webdriver.Firefox()
-        cls.driver.fullscreen_window()
 
     @allure.title('Проверка текста ответов на блоке "Вопросы о важном"')
     @pytest.mark.parametrize(
@@ -27,17 +20,16 @@ class TestGetAnswer:
             [MainPageLocators.question_8, MainPageLocators.answer_8, 'Да, обязательно. Всем самокатов! И Москве, и Московской области.']
         ]
     )
-    def test_get_answer(self, locator_question, locator_answer, expected_result):
-        self.driver.get('https://qa-scooter.praktikum-services.ru/')
+    def test_get_answer(self, locator_question, locator_answer, expected_result, driver):
         # объект класса главной страницы
-        main_page = MainPage(self.driver)
+        main_page = MainPageHelper(driver)
+        # открытие страницы
+        main_page.go_to_page()
         # скролл до блока с вопросами
         main_page.scroll_to_block_questions()
-        # нажатие на вопрос и получение ответа на вопрос
-        actual_result = main_page.click_on_question_and_get_answer(locator_question, locator_answer)
+        # нажатие на вопрос
+        main_page.click_on_question(locator_question)
+        # получение ответа на вопрос
+        actual_result = main_page.get_answer_on_question(locator_answer)
 
         assert actual_result == expected_result
-
-    @classmethod
-    def teardown_class(cls):
-        cls.driver.quit()
