@@ -1,41 +1,43 @@
-from selenium import webdriver
-from pages.order_page import OrderPage
-from pages.main_page import MainPage
+from locators.base_page_locators import BasePageLocators
+from pages.main_page import MainPageHelper
+from pages.base_page import BasePage
 import allure
 
 
 class TestClickLogo:
-    driver = None
-
-    @classmethod
-    def setup_class(cls):
-        cls.driver = webdriver.Firefox()
-        cls.driver.fullscreen_window()
-
     @allure.title('Проверка нажатия на логотип "Самокат" на странице заказа')
-    def test_click_logo_scooter_on_page_order(self):
-        self.driver.get('https://qa-scooter.praktikum-services.ru/')
+    def test_click_logo_scooter_on_page_order(self, driver):
         # объект класса страницы оформления заказа
-        order_page = OrderPage(self.driver)
+        main_page = MainPageHelper(driver)
+        # открытие страницы
+        main_page.go_to_page()
         # метод нажатия на кнопку "Заказать"
-        order_page.click_on_button_order_on_header()
+        main_page.click_on_button_order_on_header()
         # метод нажатия на логотип "Самокат"
-        order_page.click_logo_scooter()
+        base_page = BasePage(driver)
+        base_page.click_logo_scooter()
         # метод получения заголовка главной страницы
-        actual_result = order_page.get_home_header()
+        actual_result = main_page.get_home_header()
 
         assert f'Самокат\nна пару дней' in actual_result
 
-    @allure.title('Проверка нажатия на логотип "Яндекс" на странице заказа')
-    def test_click_logo_yandex_on_main_page(self):
-        self.driver.get('https://qa-scooter.praktikum-services.ru/')
+    @allure.title('Проверка нажатия на логотип "Яндекс" на главной странице')
+    def test_click_logo_yandex_on_main_page(self, driver):
         # объект класса страницы оформления заказа
-        main_page = MainPage(self.driver)
-        # метод нажатия на логотип "Яндекс" и получения текущего url
-        actual_result = main_page.click_logo_yandex_and_get_current_url()
+        main_page = MainPageHelper(driver)
+        # открытие страницы
+        main_page.go_to_page()
+
+        base_page = BasePage(driver)
+        # нажатие на логотип Яндекс
+        base_page.click_logo_yandex()
+        # ожидания открытия нового окна
+        base_page.wait_open_new_window(wait_time=3)
+        # переключение на новое окно
+        base_page.switch_new_window()
+        # ищем логотип Дзен
+        base_page.find_element(BasePageLocators.logo_dzen)
+        # получение текущего url
+        actual_result = base_page.get_current_url()
 
         assert 'dzen.ru' in actual_result
-
-    @classmethod
-    def teardown_class(cls):
-        cls.driver.quit()
