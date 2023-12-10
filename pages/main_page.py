@@ -1,35 +1,42 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
+import allure
+
+from locators.base_page_locators import BasePageLocators
 from locators.main_page_locators import MainPageLocators
+from pages.base_page import BasePage
 
 
-class MainPage:
-
-    def __init__(self, driver):
-        self.driver = driver
-
+class MainPageHelper(BasePage):
+    @allure.step("Скролл до блока FAQ")
     def scroll_to_block_questions(self):
-        element = self.driver.find_element(*MainPageLocators.title_questions)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        self.scroll_to_element(MainPageLocators.title_questions)
 
-    def wait_panel_questions(self):
-        WebDriverWait(self.driver, 3).until(
-            expected_conditions.visibility_of_element_located((By.CLASS_NAME, "accordion")))
+    @allure.step("Нажатие на вопрос")
+    def click_on_question(self, question):
+        self.find_element(question, wait_time=3).click()
 
-    def click_on_question_and_get_answer(self, question, answer):
-        self.wait_panel_questions()
-        self.driver.find_element(*question).click()
-        return self.driver.find_element(*answer).text
+    @allure.step("Получение ответа на вопрос")
+    def get_answer_on_question(self, answer):
+        return self.find_element(answer, wait_time=3).text
 
     def click_logo_yandex_and_get_current_url(self):
-        self.driver.find_element(*MainPageLocators.logo_yandex).click()
+        self.click_logo_yandex()
         # ожидаем появление второй вкладки
-        WebDriverWait(self.driver, 3).until(expected_conditions.number_of_windows_to_be(2))
+        self.wait_open_new_window(wait_time=3)
         # переключаемся на вторую вкладку
-        self.driver.switch_to.window(self.driver.window_handles[-1])
+        self.switch_new_window()
         # ожидаем появление логотипа "Дзен"
-        WebDriverWait(self.driver, 3).until(
-            expected_conditions.visibility_of_element_located((By.CLASS_NAME, "desktop-base-header__logoBrand-3W")))
-        # получаем текущий url
-        return self.driver.current_url
+        self.find_element(BasePageLocators.logo_dzen)
+
+    @allure.step('Нажатие на кнопку Заказать в шапке сайта')
+    def click_on_button_order_on_header(self):
+        self.find_element(MainPageLocators.button_order_on_header).click()
+
+    def click_on_button_order_on_footer(self):
+        # скролл до кнопки "Заказать" внизу страницы
+        self.scroll_to_element(MainPageLocators.button_order_on_footer)
+        # клик по кнопке "Заказать"
+        self.find_element(MainPageLocators.button_order_on_footer, wait_time=3).click()
+
+    @allure.step('Получение заголовка на главной странице')
+    def get_home_header(self):
+        return self.find_element(MainPageLocators.home_header).text
