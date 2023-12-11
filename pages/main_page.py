@@ -1,8 +1,7 @@
-import allure
-
-from locators.base_page_locators import BasePageLocators
 from locators.main_page_locators import MainPageLocators
 from pages.base_page import BasePage
+
+import allure
 
 
 class MainPageHelper(BasePage):
@@ -20,7 +19,7 @@ class MainPageHelper(BasePage):
 
     @allure.step('Нажатие на кнопку Заказать в шапке сайта')
     def click_on_button_order_on_header(self):
-        self.find_element(MainPageLocators.button_order_on_header).click()
+        self.find_element(MainPageLocators.button_order_on_header, wait_time=3).click()
 
     @allure.step('Нажатие на кнопку Заказать внизу сайта')
     def click_on_button_order_on_footer(self):
@@ -31,4 +30,4 @@ class MainPageHelper(BasePage):
 
     @allure.step('Получение заголовка на главной странице')
     def get_home_header(self):
-        return self.find_element(MainPageLocators.home_header).text
+        return self.find_element(MainPageLocators.home_header, wait_time=3).text
